@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging App</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+    <div class="container mx-auto p-4">
+        <div id="messages" class="bg-white p-4 h-96 overflow-y-scroll mb-4"></div>
+        <input type="text" id="messageInput" class="border p-2 w-full" placeholder="Type your message here...">
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const messages = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const message = messageInput.value;
+                socket.emit('newMessage', message);
+                messageInput.value = '';
+            }
+        });
+
+        socket.on('message', function (msg) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = msg;
+            messages.appendChild(messageElement);
+        });
+    </script>
+</body>
+</html>

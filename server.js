@@ -14,7 +14,7 @@ app.use(express.static('public')); // Serves static files from the 'public' dire
 
 // Encryption setup
 const algorithm = 'aes-256-cbc';
-const secretKey = '123456789123456189123456789000123456'; // Replace with a secure key
+const secretKey = '12345678912345618912345678900012'; // Replace with a secure key
 const iv = crypto.randomBytes(16);
 
 function encrypt(text) {
